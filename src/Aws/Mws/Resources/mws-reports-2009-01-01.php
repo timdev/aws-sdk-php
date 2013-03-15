@@ -4,7 +4,7 @@ return array(
   'endpointPrefix' => '',
   'serviceFullName' => 'Amazon MWS Reports API',
   'serviceAbbreviation' => 'MWS Reports',
-  'serviceType' => 'aws.query',
+  //'serviceType' => 'aws.query',
   'resultWrapped' => true,
   'signatureVersion' => 'v2',
   'namespace' => 'Mws',
@@ -22,7 +22,7 @@ return array(
   ),
   'operations' => array(
     'GetReportList' => array(
-      'httpMethod' => 'GET',
+      'httpMethod' => 'POST',
       'uri' => '',
       'class' => 'Aws\\Common\\Command\\QueryCommand',
       'responseClass' => 'GetReportListResponse',
@@ -36,37 +36,44 @@ return array(
           'static' => true
         ),
         'MerchantId' => array(
-          'location' => 'query',
+          'location' => 'aws.query',
           'type' => 'string',
           'required' => true,
           'sentAs' => 'SellerId'
         ),
         'MaxCount' => array(
-          'location' => 'query',
+          'location' => 'aws.query',
           'type' => 'integer',
           'minimum' => 1,
           'maximum' => 100
         ),
         'ReportTypeList' => array(
-          'location' => 'query',
-          'type' => 'array'
+          'location' => 'aws.query',
+          'type' => 'array',
+          'sentAs'=>'ReportTypeList.Type',
+          'items' => array(
+            'name'=>'ReportType',
+            'type'=>'string',
+            'minLength'=>1,
+            'maxLength'=>255
+          )
         ),
         'Acknowledged' => array(
-          'location' => 'query',
+          'location' => 'aws.query',
           'type' => 'boolean'
         ),
         'AvailableFromDate' => array(
-          'location' => 'query',
+          'location' => 'aws.query',
           'type' => 'object',
           'instanceOf' => '\\DateTime'
         ),
         'AvailableToDate' => array(
-          'location' => 'query',
+          'location' => 'aws.query',
           'type' => 'object',
           'instanceOf' => '\\DateTime'
         ),
         'ReportRequestIdList' => array(
-          'location' => 'query',
+          'location' => 'aws.query',
           'type' => 'array'
         )
       )
