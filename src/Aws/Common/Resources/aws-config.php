@@ -123,6 +123,12 @@ return array(
             'class'   => 'Aws\ImportExport\ImportExportClient'
         ),
 
+        'mws-reports' => array(
+            'alias' => 'Mws',
+            'extends' => 'default_settings',
+            'class' => 'Aws\Mws\MwsClient'
+        ),
+
         'opsworks' => array(
             'alias'   => 'OpsWorks',
             'extends' => 'default_settings',

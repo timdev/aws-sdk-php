@@ -19,6 +19,7 @@ namespace Aws\Mws;
 use Aws\Common\Client\AbstractClient;
 use Aws\Common\Client\ClientBuilder;
 use Aws\Common\Enum\ClientOptions as Options;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
@@ -82,6 +83,9 @@ class MwsClient extends AbstractClient
    */
   public static function factory($config = array())
   {
+
+    $config[Options::BACKOFF] = BackoffPlugin::getExponentialBackoff(8);
+
     $client = ClientBuilder::factory(__NAMESPACE__)
       ->setConfig($config)
       ->setConfigDefaults(array(
@@ -94,21 +98,4 @@ class MwsClient extends AbstractClient
     return $client;
   }
 
-  /**
-   * Converts a queue URL into a queue ARN.
-   *
-   * @param string $queueUrl The queue URL to perform the action on. Retrieved when the queue is first created.
-   *
-   * @return string An ARN representation of the queue URL.
-   */
-//  public function getQueueArn($queueUrl)
-//  {
-//    return strtr($queueUrl, array(
-//      'http://'        => 'arn:aws:',
-//      'https://'       => 'arn:aws:',
-//      '.amazonaws.com' => '',
-//      '/'              => ':',
-//      '.'              => ':',
-//    ));
-//  }
 }
