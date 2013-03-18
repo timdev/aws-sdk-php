@@ -26,11 +26,33 @@ return array(
     )
   ),
   'operations' => array(
-//    'GetReport' => array(
-//      'httpMethod' => 'POST',
-//      'uri' => '',
-//      'class' =>
-//    ),
+    'GetReport' => array(
+      'httpMethod' => 'POST',
+      'uri' => '',
+      'class' => 'Aws\\Common\\Command\\QueryCommand',
+//      'responseClass' => 'GetReportResponse',
+//      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'default' => 'GetReport',
+          'static' => false
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'ReportId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'ReportId'
+        )
+      )
+    ),
     'GetReportList' => array(
       'httpMethod' => 'POST',
       'uri' => '',
