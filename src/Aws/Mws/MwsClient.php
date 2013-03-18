@@ -24,27 +24,17 @@ use Guzzle\Common\Collection;
 use Guzzle\Service\Resource\Model;
 
 /**
- * Client to interact with Amazon Simple Queue Service
+ * Client to interact with Amazon MWS Reports API.
  *
- * @method Model addPermission(array $args = array()) {@command Sqs AddPermission}
- * @method Model changeMessageVisibility(array $args = array()) {@command Sqs ChangeMessageVisibility}
- * @method Model changeMessageVisibilityBatch(array $args = array()) {@command Sqs ChangeMessageVisibilityBatch}
- * @method Model createQueue(array $args = array()) {@command Sqs CreateQueue}
- * @method Model deleteMessage(array $args = array()) {@command Sqs DeleteMessage}
- * @method Model deleteMessageBatch(array $args = array()) {@command Sqs DeleteMessageBatch}
- * @method Model deleteQueue(array $args = array()) {@command Sqs DeleteQueue}
- * @method Model getQueueAttributes(array $args = array()) {@command Sqs GetQueueAttributes}
- * @method Model getQueueUrl(array $args = array()) {@command Sqs GetQueueUrl}
- * @method Model listQueues(array $args = array()) {@command Sqs ListQueues}
- * @method Model receiveMessage(array $args = array()) {@command Sqs ReceiveMessage}
- * @method Model removePermission(array $args = array()) {@command Sqs RemovePermission}
- * @method Model sendMessage(array $args = array()) {@command Sqs SendMessage}
- * @method Model sendMessageBatch(array $args = array()) {@command Sqs SendMessageBatch}
- * @method Model setQueueAttributes(array $args = array()) {@command Sqs SetQueueAttributes}
+ * @method Model requesetReport(array $args = array()) {@command Mws RequestReport}
+ * @method Model getReportList(array $args = array()) {@command Mws GetReportList}
+ * @method Model getReport(array $args = array()) {@command Mws GetReport}
+ *
  */
 class MwsClient extends AbstractClient
 {
   /**
+   * @todo fix this.
    * Factory method to create a new Amazon Simple Queue Service client using an array of configuration options.
    *
    * The following array keys and values are available options:
