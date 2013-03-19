@@ -81,7 +81,7 @@ return array(
    * This flag causes the Aws\Common\Command\XmlResponseLocationViewer to promote direct children of
    * <operation-name>Result to top-level elements in the parsed response array.
    */
-  'resultWrapped' => true,
+  'resultWrapped' => false,
   'signatureVersion' => 'v2',
   'namespace' => 'Mws',
   'regions' => array(
@@ -340,7 +340,14 @@ return array(
         ),
         'ReportRequestIdList' => array(
           'location' => 'aws.query',
-          'type' => 'array'
+          'type' => 'array',
+          'sentAs' => 'ReportRequestIdList.Id',
+          'items' => array(
+            'name' => 'Status',
+            'type' => 'string',
+            'minLength' => 1,
+            'maxLength' => 255
+          )
         ),
         'NextToken' => array(
           'location' =>'aws.query',
@@ -396,6 +403,24 @@ return array(
       'properties' => array(
         'GetReportListResult' => array(
           'type' => 'object',
+          'location' => 'xml',
+          'properties' => array(
+            'ReportInfo' => array(
+              'type' => 'array',
+              //'location'=>'xml',
+              'items' => array(
+                'type' => 'object',
+                //'location' => 'xml',
+                'properties' => array(
+                  'ReportId' => array('type'=>'integer','location'=>'xml'),
+                  'ReportType'  => array('type'=>'string', 'location'=>'xml'),
+                  'ReportRequestId' => array('type' => 'integer', 'location'=>'xml'),
+                  'AvailableDate' => array('type'=>'string', 'location'=>'xml'),
+                  'Acknowledged' => array('type' => 'boolean')
+                )
+              )
+            )
+          )
         ),
         'ResponseMetadata' => array(
           'type' => 'object',
@@ -406,10 +431,25 @@ return array(
     'GetReportRequestListResponse' => array(
       'type' => 'object',
       'location' => 'xml',
-      //'additionalProperties' => false,
+      'additionalProperties' => false,
       'properties' => array(
         'GetReportRequestListResult' => array(
           'type' => 'object',
+          'location'=>'xml',
+          'properties' => array(
+            'ReportRequestInfo' => array(
+              'type' => 'array',
+              'location'=>'xml',
+              'additionalProperties' => false,
+              'items' => array(
+                'ReportRequestId' => array('type'=>'numeric', 'location'=>'xml'),
+                'ReportType'  => array('type'=>'string', 'location'=>'xml'),
+                'StartDate' => array('type'=>'string', 'location'=>'xml'),
+                'EndDate' => array('type'=>'string', 'location'=>'xml'),
+                'Scheduled' => array('type'=>'boolean', 'location'=>'xml'),
+              )
+            )
+          )
         ),
         'ResponseMetadata' => array(
           'type' => 'object',
@@ -423,15 +463,15 @@ return array(
     'operations' => array(
       'GetReportList' => array(
         'token_param' => 'NextToken',
-        'token_key' => 'NextToken',
+        'token_key' => 'GetReportListResult/NextToken',
         'limit_key' => 'MaxRecords',
-        'result_key' => 'ReportInfo',
+        'result_key' => 'GetReportListResult/ReportInfo',
       ),
       'GetReportRequestList' => array(
         'token_param' => 'NextToken',
-        'token_key' => 'NextToken',
+        'token_key' => 'GetReportRequestListResult/NextToken',
         'limit_key' => 'MaxCount',
-        'result_key' => 'ReportRequestInfo',
+        'result_key' => 'GetReportRequestListResult/ReportRequestInfo',
       )
     )
   )
