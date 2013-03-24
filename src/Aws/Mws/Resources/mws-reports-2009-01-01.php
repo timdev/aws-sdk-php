@@ -100,6 +100,7 @@ return array(
   'resultWrapped' => false,
   'signatureVersion' => 'v2',
   'namespace' => 'Mws',
+
   'regions' => array(
     'us' => array(
       'http' => false,
@@ -112,6 +113,7 @@ return array(
       'hostname' => 'mws.amazonservices.ca'
     )
   ),
+
   'operations' => array(
     'RequestReport' => array(
       'httpMethod' => 'POST',
@@ -165,6 +167,33 @@ return array(
           'location' => 'aws.query'
         )
       )
+    ),
+    'GetReport' => array(
+      'httpMethod' => 'POST',
+      'uri' => '',
+      'class' => 'Aws\\Common\Command\\QueryCommand',
+      'responseClass' => 'GetReportResponse',
+      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'default' => 'GetReport',
+          'static' => false
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'ReportId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true
+        )
+      )
+
     ),
     'GetReportRequestList' => array(
       'httpMethod' => 'POST',
@@ -440,6 +469,7 @@ return array(
       )
     )
   ),
+
   'models' => array(
     'RequestReportResponse' => array(
       'type' => 'object',
