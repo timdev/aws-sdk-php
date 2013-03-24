@@ -69,7 +69,23 @@ $reportRequestStatusEnumeration = array(
   '_DONE_NO_DATA_'
 );
 
-
+$reportScheduleEnumeration = array(
+  '_15_MINUTES_',
+  '_30_MINUTES_',
+  '_1_HOUR_',
+  '_2_HOURS_',
+  '_4_HOURS_',
+  '_8_HOURS_',
+  '_12_HOURS_',
+  '_72_HOURS_',
+  '_1_DAY_',
+  '_2_DAYS_',
+  '_1_WEEK_',
+  '_14_DAYS_',
+  '_15_DAYS_',
+  '_30_DAYS_',
+  '_NEVER_'
+);
 return array(
   'apiVersion' => '2009-01-01',
   'endpointPrefix' => '',
@@ -302,7 +318,8 @@ return array(
           'location' => 'aws.query',
           'type' => 'integer',
           'minimum' => 1,
-          'maximum' => 100
+          'maximum' => 100,
+          'default' => 100
         ),
         'ReportTypeList' => array(
           'location' => 'aws.query',
@@ -318,7 +335,7 @@ return array(
         ),
         'Acknowledged' => array(
           'location' => 'aws.query',
-          'type' => 'boolean'
+          'type' => 'string'
         ),
         'AvailableFromDate' => array(
           'type' => array(
@@ -377,6 +394,48 @@ return array(
         'NextToken' => array(
           'location' =>'aws.query',
           'type' => 'string'
+        )
+      )
+    ),
+    'ManageReportSchedule' => array(
+      'httpMethod' => 'POST',
+      'uri' => '',
+      'class' => 'Aws\\Common\\Command\\QueryCommand',
+      'responseClass' => 'ManageReportScheduleResponse',
+      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'default' => 'ManageReportSchedule',
+          'static' => true,
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'ReportType' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'type' => 'string',
+          'enum' => $reportTypeEnumeration // @todo see docs and make a more limited enumeration
+        ),
+        'Schedule' => array(
+          'location'=>'aws.query',
+          'type' => 'string',
+          'required'=>true,
+          'enum' => $reportScheduleEnumeration
+        ),
+        'ScheduleDate' => array(
+          'type' => array(
+            'object',
+            'string',
+            'integer',
+          ),
+          'format' => 'date-time',
+          'location' => 'aws.query'
         )
       )
     )
@@ -455,6 +514,25 @@ return array(
           'type' => 'object',
           'location'=>'xml'
         )
+      )
+    ),
+    'ManageReportScheduleResponse' => array(
+      'type' => 'object',
+      'location' => 'xml',
+      'properties'=>array(
+        'ManageReportScheduleResult' => array(
+          'type' => 'object',
+          'location' => 'xml',
+//          'properties' => array(
+//            'Count' => array(
+//              'type' => 'string'
+//            ),
+//            'ReportType' => array('type' => 'string'),
+//            'Schedule' => array('type' => 'string'),
+//            'ScheduledDate' => array('type' => 'string')
+//          )
+        ),
+        'ResponseMetadata' => array('type' => 'object', 'location'=>'xml')
       )
     )
   ),
