@@ -1,9 +1,19 @@
 CHANGELOG
 =========
 
-Next Release:
--------------
+Next Release
+------------
 
+* Added support for automatically retrying throttled requests with exponential backoff to all service clients
+* Added a new config option (`gc_operation_delay`) to the DynamoDB Session Handler to specify a delay between requests
+  to the service during garbage collection in order to help regulate the consumption of throughput
+* [Docs] Added a page about Waiters to the user guide
+* [Docs] Added a page about the DynamoDB Session Handler to the user guide
+
+2.2.1 (2013-03-18)
+------------------
+
+* Added the `us-gov-west-1` region to the Amazon Simple Workflow Service client
 * Added support for viewing and downloading DB log files to the Amazon RDS client
 * Added the ability to validate incoming Amazon SNS messages. See the `Aws\Sns\MessageValidator` namespace
 * Added the ability to easily change the credentials that a client is configured to use via `$client->setCredentials()`
@@ -13,6 +23,10 @@ Next Release:
 * Updated the Amazon RDS client to use the 2013-02-12 API version
 * Fixed an issue in the Amazon EC2 service description that was affecting the use of the new `ModifyVpcAttribute` and
   `DescribeVpcAttribute` operations
+* Added ObjectURL to the output of an Amazon S3 PutObject operation so that you can more easily retrieve the URL of an
+  object after uploading
+* Added a `createPresignedUrl()` method to any command object created by the Amazon S3 client to more easily create
+  presigned URLs
 
 2.2.0 (2013-03-11)
 ------------------
