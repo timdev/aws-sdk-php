@@ -86,6 +86,7 @@ $reportScheduleEnumeration = array(
   '_30_DAYS_',
   '_NEVER_'
 );
+
 return array(
   'apiVersion' => '2009-01-01',
   'endpointPrefix' => '',
@@ -98,7 +99,9 @@ return array(
    * <operation-name>Result to top-level elements in the parsed response array.
    */
   'resultWrapped' => false,
+
   'signatureVersion' => 'v2',
+
   'namespace' => 'Mws',
 
   'regions' => array(
@@ -115,6 +118,7 @@ return array(
   ),
 
   'operations' => array(
+
     'RequestReport' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -168,6 +172,7 @@ return array(
         )
       )
     ),
+
     'GetReport' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -195,6 +200,7 @@ return array(
       )
 
     ),
+
     'GetReportRequestList' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -274,6 +280,7 @@ return array(
         )
       )
     ),
+
     'GetReportRequestListByNextToken' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -299,6 +306,7 @@ return array(
         )
       )
     ),
+
     'GetReport' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -324,6 +332,7 @@ return array(
         )
       )
     ),
+
     'GetReportList' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -401,6 +410,7 @@ return array(
         )
       )
     ),
+
     'GetReportListByNextToken' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -426,6 +436,7 @@ return array(
         )
       )
     ),
+
     'ManageReportSchedule' => array(
       'httpMethod' => 'POST',
       'uri' => '',
@@ -467,10 +478,49 @@ return array(
           'location' => 'aws.query'
         )
       )
+    ),
+
+    'UpdateReportAcknowledgements' => array(
+      'httpMethod' => 'POST',
+      'uri' => '',
+      'class' => 'Aws\\Common\\Command\\QueryCommand',
+      'responseClass' => 'UpdateReportAcknowledgementsResponse',
+      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'default' => 'UpdateReportAcknowledgements',
+          'static' => false
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'ReportIdList' => array(
+          'location' => 'aws.query',
+          'type' => 'array',
+          'sentAs' => 'ReportIdList.Id',
+          'items' => array(
+            'name' => 'id',
+            'type' => 'string'
+          )
+        ),
+        'Acknowledged' => array(
+          'location' => 'aws.query',
+          'type' => 'boolean',
+          'required' => true,
+          'default' => true
+        )
+
+      )
     )
   ),
 
   'models' => array(
+
     'RequestReportResponse' => array(
       'type' => 'object',
       'location' => 'xml',
@@ -485,6 +535,7 @@ return array(
         )
       )
     ),
+
     'GetReportListResponse' => array(
       'type' => 'object',
       'location' => 'xml',
@@ -517,6 +568,7 @@ return array(
         )
       )
     ),
+
     'GetReportRequestListResponse' => array(
       'type' => 'object',
       'location' => 'xml',
@@ -546,6 +598,7 @@ return array(
         )
       )
     ),
+
     'ManageReportScheduleResponse' => array(
       'type' => 'object',
       'location' => 'xml',
@@ -563,6 +616,39 @@ return array(
 //          )
         ),
         'ResponseMetadata' => array('type' => 'object', 'location'=>'xml')
+      )
+    ),
+
+    'UpdateReportAcknowledgementsResponse' => array(
+      'type' => 'object',
+      'location' => 'xml',
+      'properties' => array(
+        'UpdateReportAcknowledgementsResult' => array(
+          'type' => 'object',
+          'location' => 'xml',
+          'properties' => array(
+            'Count' => array(
+              'location' => 'xml',
+              'type' => 'integer'
+            ),
+            'ReportInfo' => array(
+              'location' => 'xml',
+              'type' => 'array',
+              'items' => array(
+                'ReportId' => array('type'=>'numeric'),
+                'ReportRequestId' => array('type'=>'numeric'),
+                'ReportType' => array('type'=>'string', 'enum' => $reportTypeEnumeration),
+                'AvailableDate' => array('type'=>'string'),
+                'Acknowledged' => array('type'=>'boolean'),
+                'AcknowledgedDate' => array('type' => 'string'),
+              )
+            )
+          )
+        ),
+        'ResponseMetadata' => array(
+          'type' => 'object',
+          'location'=>'xml'
+        )
       )
     )
   ),
