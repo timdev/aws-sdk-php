@@ -114,7 +114,41 @@ return array(
       'http' => false,
       'https' => true,
       'hostname' => 'mws.amazonservices.ca'
-    )
+    ),
+    'de' => array(
+      'http' => false,
+      'https' => true,
+      'hostname' => 'mws.amazonservices.de'
+    ),
+    'es' => array(
+      'http' => false,
+      'https' => true,
+      'hostname' => 'mws.amazonservices.es'
+    ),
+    'fr' => array(
+      'http' => false,
+      'https' => true,
+      'hostname' => 'mws.amazonservices.fr'
+    ),
+    'it' => array(
+      'http' => false,
+      'https' => true,
+      'hostname' => 'mws.amazonservices.it'
+    ),
+    'jp' => array(
+      'http' => false,
+      'https' => true,
+      'hostname' => 'mws.amazonservices.jp'
+    ),
+    'uk' => array(
+      'http' => false,
+      'https' => true,
+      'hostname' => 'mws.amazonservices.co.uk'
+    ),
+
+
+
+
   ),
 
   'operations' => array(
@@ -510,7 +544,7 @@ return array(
         ),
         'Acknowledged' => array(
           'location' => 'aws.query',
-          'type' => 'boolean',
+          'type' => 'string',
           'required' => true,
           'default' => true
         )
