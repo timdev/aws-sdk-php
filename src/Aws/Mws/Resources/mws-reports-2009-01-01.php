@@ -153,6 +153,28 @@ return array(
 
   'operations' => array(
 
+    'ListMarketplaceParticipations' => array(
+      'httpMethod' => 'POST',
+      'uri' => '/Sellers/2011-07-01',
+      'class' => 'Aws\\Common\\Command\\QueryCommand',
+      'responseClass' => 'ListMarketplaceParticipationsResponse',
+      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'default' => 'ListMarketplaceParticipations',
+          'static' => true
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        )
+      )
+    ),
+
     'RequestReport' => array(
       'httpMethod' => 'POST',
       'uri' => '',
