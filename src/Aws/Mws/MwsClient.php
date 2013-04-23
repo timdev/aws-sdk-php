@@ -29,6 +29,7 @@ use Guzzle\Service\Resource\Model;
  * @method Model requesetReport(array $args = array()) {@command Mws RequestReport}
  * @method Model getReportList(array $args = array()) {@command Mws GetReportList}
  * @method Model getReport(array $args = array()) {@command Mws GetReport}
+ * @method Model listMarketplaceParticipations() {@command Mws ListMarketplaceParticipations}
  *
  */
 class MwsClient extends AbstractClient
@@ -74,7 +75,8 @@ class MwsClient extends AbstractClient
   public static function factory($config = array())
   {
 
-    $config[Options::BACKOFF] = BackoffPlugin::getExponentialBackoff(8);
+#    if (empty($config[Options::BACKOFF]))
+#      $config[Options::BACKOFF] = BackoffPlugin::getExponentialBackoff(8);
 
     $client = ClientBuilder::factory(__NAMESPACE__)
       ->setConfig($config)
