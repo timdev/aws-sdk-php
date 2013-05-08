@@ -153,6 +153,33 @@ return array(
 
   'operations' => array(
 
+    'ListOrderItems' => array(
+      'httpMethod' => 'POST',
+      'uri' => '/Orders/2011-01-01',
+      'class' => 'Aws\\Common\\Command\\QueryCommand',
+      'responseClass' => 'ListOrderItemsResponse',
+      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'aws.query',
+          'required' => true,
+          'default' => 'ListOrderItems',
+          'static' => true
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'AmazonOrderId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required'=>true
+        )
+      )
+    ),
+
     'ListMarketplaceParticipations' => array(
       'httpMethod' => 'POST',
       'uri' => '/Sellers/2011-07-01',
@@ -572,11 +599,83 @@ return array(
         )
 
       )
+    ),
+
+    'SubmitFeed' => array(
+      'httpMethod' => 'PUT',
+      'contentType' => 'text/xml; charset=utf-8',
+      'uri' => '',
+      'class' => 'Aws\\Common\\Command\\QueryCommand',
+      'responseClass' => 'SubmitFeedResponse',
+      'responseType' => 'model',
+      'parameters' => array(
+        'Action' => array(
+          'location' => 'query',
+          'required' => true,
+          'default' => 'SubmitFeed',
+          'type'=>'string',
+          'static'=>'true'
+        ),
+        'MerchantId' => array(
+          'location' => 'query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'FeedType' => array(
+          'location' => 'query',
+          'type' => 'string',
+          'required' => true
+        ),
+        'FeedXml' => array(
+          'location' => 'body',
+          //'type' => 'string'
+        ),
+        'ContentMD5' => array(
+          'description' => 'Content-MD5 checksum of the body. Set to false to disable',
+          'default' => true,
+        ),
+        'ValidateMD5' => array(
+          'description' => 'Whether or not the Content-MD5 header of the response is validated. Default is true.',
+          'default' => true,
+        ),
+        'Content-Type' => array(
+          'location' => 'header',
+          'sentAs' => 'Content-Type',
+          'default' => 'text/xml'
+        ),
+//        'MD5' => array(
+//          'location'=>'header',
+//          'type' => 'string',
+//          'required'=>true,
+//          'sentAs' => 'Content-MD5'
+//        )
+      )
     )
   ),
 
   'models' => array(
 
+    'SubmitFeedResponse' => array(
+      'type' => 'object',
+      'location' => 'xml',
+      'properties' => array(
+        'SubmitFeedResult' => array(
+          'type'=>'object',
+          'location'=>'xml'
+        )
+      )
+    ),
+    'ListOrderItemsResponse' => array(
+      'type'=>'object',
+      'location'=>'xml',
+      'properties' => array(
+        'ListOrderItemsResult'=>array(
+          'type'=>'object',
+          'location'=>'xml'
+        )
+      )
+    ),
     'RequestReportResponse' => array(
       'type' => 'object',
       'location' => 'xml',
