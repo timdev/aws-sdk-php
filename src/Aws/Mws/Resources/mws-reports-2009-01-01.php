@@ -87,6 +87,25 @@ $reportScheduleEnumeration = array(
   '_NEVER_'
 );
 
+$feedProcessingStatusEnumeration = array('_SUBMITTED_', '_IN_PROGRESS_', '_CANCELLED_', '_DONE_' );
+
+$feedTypeEnumeration = array(
+  '_POST_FULFILLMENT_ORDER_CANCELLATION_REQUEST_DATA_',
+  '_POST_FULFILLMENT_ORDER_REQUEST_DATA_',
+  '_POST_INVENTORY_AVAILABILITY_DATA_',
+  '_POST_INVOICE_CONFIRMATION_DATA_',
+  '_POST_ITEM_DATA_',
+  '_POST_ORDER_ACKNOWLEDGEMENT_DATA_',
+  '_POST_ORDER_FULFILLMENT_DATA_',
+  '_POST_PAYMENT_ADJUSTMENT_DATA_',
+  '_POST_PRODUCT_DATA_',
+  '_POST_PRODUCT_IMAGE_DATA_',
+  '_POST_PRODUCT_OVERRIDES_DATA_',
+  '_POST_PRODUCT_PRICING_DATA_',
+  '_POST_PRODUCT_RELATIONSHIP_DATA_',
+  '_POST_STD_ACES_DATA_'
+);
+
 return array(
   'apiVersion' => '2009-01-01',
   'endpointPrefix' => '',
@@ -651,6 +670,104 @@ return array(
 //          'sentAs' => 'Content-MD5'
 //        )
       )
+    ),
+    'GetFeedSubmissionList' => array(
+      'httpMethod'=>'POST',
+      'uri'=>'',
+      'class'=>'Aws\\Common\\Command\QueryCommand',
+      'responseClass'=>'GetFeedSubmissionListResponse',
+      'responseType'=>'model',
+      'parameters' => array(
+        'Action' => array(
+          'location'=>'aws.query',
+          'required'=>true,
+          'default'=>'GetFeedSubmissionList',
+          'type'=>'string',
+          'static'=>true
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'MaxCount' => array(
+          'location' => 'aws.query',
+          'type' => 'integer',
+          'minimum' => 1,
+          'maximum' => 100,
+          'default' => 100
+        ),
+        'SubmittedFromDate' => array(
+          'type' => array(
+            'object',
+            'string',
+            'integer',
+          ),
+          'format' => 'date-time',
+          'location' => 'aws.query'
+        ),
+        'SubmittedToDate' => array(
+          'type' => array(
+            'object',
+            'string',
+            'integer',
+          ),
+          'format' => 'date-time',
+          'location' => 'aws.query'
+        ),
+        'FeedSubmissionIdList' => array(
+          'location' => 'aws.query',
+          'type' => 'array',
+          'sentAs' => 'FeedSubmissionIdList.Id',
+          'items' => array(
+            'name' => 'Status',
+            'type' => 'string',
+            'minLength' => 1,
+            'maxLength' => 255
+          )
+        ),
+        'FeedProcessingStatusList' => array(
+          'location' => 'aws.query',
+          'sentAs' => 'FeedProcessingStatusList.Status',
+          'required' => false,
+          'type' => 'array',
+          'enum' => $feedProcessingStatusEnumeration
+        ),
+        'FeedTypeList' => array(
+          'location' => 'aws.query',
+          'sentAs' => 'FeedTypeList.Type',
+          'type'=>'array',
+          'enum' => $feedTypeEnumeration
+        )
+      )
+    ),
+    'GetFeedSubmissionResult' => array(
+      'httpMethod'=>'POST',
+      'uri'=>'',
+      'class'=>'Aws\\Common\\Command\QueryCommand',
+      'responseClass'=>'GetFeedSubmissionResultResponse',
+      'responseType'=>'model',
+      'parameters' => array(
+        'Action' => array(
+          'location'=>'aws.query',
+          'required'=>true,
+          'default'=>'GetFeedSubmissionResult',
+          'type'=>'string',
+          'static'=>true
+        ),
+        'MerchantId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true,
+          'sentAs' => 'SellerId'
+        ),
+        'FeedSubmissionId' => array(
+          'location' => 'aws.query',
+          'type' => 'string',
+          'required' => true
+        )
+      )
     )
   ),
 
@@ -666,12 +783,33 @@ return array(
         )
       )
     ),
+
+    'GetFeedSubmissionListResponse' =>array(
+      'type' => 'object',
+      'location' => 'xml',
+      'properties' => array(
+        'GetFeedSubmissionListResult' => array(
+          'type'=>'object',
+          'location' => 'xml'
+        )
+      )
+    ),
     'ListOrderItemsResponse' => array(
       'type'=>'object',
       'location'=>'xml',
       'properties' => array(
         'ListOrderItemsResult'=>array(
           'type'=>'object',
+          'location'=>'xml'
+        )
+      )
+    ),
+    'GetFeedSubmissionResultResponse' => array(
+      'type'=>'object',
+      'location'=>'xml',
+      'properties' => array(
+        'Message' => array(
+          'type' => 'object',
           'location'=>'xml'
         )
       )
